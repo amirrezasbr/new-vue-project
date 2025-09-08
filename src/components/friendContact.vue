@@ -1,8 +1,10 @@
 <template>
   <li>
-    <h2>{{ name }} {{ friendIsFavorite === '1'? '(favorite)':''  }}</h2>
+    <h2>{{ name }} {{ isFavorite ? "(favorite)" : "" }}</h2>
     <button @click="toggleFavorites">toggle favorite</button>
-    <button @click="toggleDetails">{{ detailsAreVisible? 'hide':'Show Details'  }}</button>
+    <button @click="toggleDetails">
+      {{ detailsAreVisible ? "hide" : "Show Details" }}
+    </button>
     <ul v-if="detailsAreVisible">
       <li><strong>Phone:</strong>{{ phoneNumber }}</li>
       <li><strong>Email:</strong>{{ email }}</li>
@@ -12,32 +14,54 @@
 
 <script>
 export default {
-    props:[
-        'name',
-        'phoneNumber',
-        'email',
-        'isFavorite',
-    ],
-    data(){
-        return{
-            detailsAreVisible:false,
-            friendIsFavorite: this.isFavorite,
-        }
-},
-methods:{
-    toggleDetails(){
-        this.detailsAreVisible = !this.detailsAreVisible;
+  emits: ["toggle-favorite"],
+  props: {
+    id: {
+      type: String,
+      default: "",
     },
-    toggleFavorites(){
-        console.log(this.friendIsFavorite )
-        if(this.friendIsFavorite === '1'){
-            this.friendIsFavorite = '0'; 
-        }else{
-            this.friendIsFavorite = '1'; 
-        }
-    }
-}
-}
+    name: {
+      type: String,
+      default: "",
+    },
+    phoneNumber: {
+      type: String,
+      default: "",
+    },
+    email: {
+      type: String,
+      default: "",
+    },
+    isFavorite: {
+      type: Boolean,
+      default: false,
+      // default: "0",
+      // validator: function (value) {
+      //   return value === "1" || value === "0";
+      // },
+    },
+  },
+  // props:[
+  //     'name',
+  //     'phoneNumber',
+  //     'email',
+  //     'isFavorite',
+  // ],
+  data() {
+    return {
+      detailsAreVisible: false,
+    };
+  },
+  methods: {
+    toggleDetails() {
+      this.detailsAreVisible = !this.detailsAreVisible;
+    },
+    toggleFavorites() {
+      this.$emit("toggle-favorite", this.id);
+      //   this.friendIsFavorite = !this.friendIsFavorite;
+    },
+  },
+};
 </script>
 
 <style></style>

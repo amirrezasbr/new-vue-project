@@ -2,10 +2,18 @@
   <section>
     <header>
       <h1>My Friends</h1>
-    </header> 
+    </header>
     <ul>
-      <friend-contact name="Manuel Lorenz" phone-number="0123 45678 90" is-favorite="1"  email="manuel@localhost.com"/> 
-      <friend-contact name="Julie Julie" phone-number="0987 654421 21"  is-favorite="0" email="julie@localhost.com"/> 
+      <friend-contact
+        v-for="(friend, index) in friends"
+        :key="index"
+        :id="friend.id"
+        :name="friend.name"
+        :phone-number="friend.phoneNumber"
+        :is-favorite="friend.isFavorite"
+        :email="friend.email"
+        @toggle-favorite="toggleFavorite"
+      />
     </ul>
   </section>
 </template>
@@ -14,25 +22,41 @@
 export default {
   data() {
     return {
-      friend: [
+      friends: [
         {
-          id: "manuel",
-          name: "Manuel Lorenz",
-          phone: "0123 45678 90",
-          email: "manuel@localhost.com",
+          id: "sadegh",
+          phoneNumber: "0915445578",
+          email: "test@gmail.com",
+          isFavorite: true,
+          name: "sadegh zavvar",
         },
         {
-          id: "julie",
-          name: "Julie Julie",
-          phone: "0987 654421 21",
-          email: "julie@localhost.com",
+          id: "hossein",
+          phoneNumber: "0915445578",
+          email: "test@gmail.com",
+          isFavorite: false,
+          name: "hsoeein esmaili",
+        },
+        {
+          id: "mori",
+          phoneNumber: "0915445578",
+          email: "mori@gmail.com",
+          isFavorite: false,
+          name: "mori penguin",
         },
       ],
     };
   },
+  methods: {
+    toggleFavorite(friendId) {
+      const identifiedFriend = this.friends.find(
+        (friend) => friend.id === friendId
+      );
+      identifiedFriend.isFavorite = !identifiedFriend.isFavorite;
+    },
+  },
 };
 </script>
-
 
 <style>
 * {
