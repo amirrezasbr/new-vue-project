@@ -3,6 +3,9 @@
     <header>
       <h1>My Friends</h1>
     </header>
+    <div>
+      <new-friend @friend-data="addFriendInfo"></new-friend>
+    </div>
     <ul>
       <friend-contact
         v-for="(friend, index) in friends"
@@ -23,31 +26,42 @@ export default {
   data() {
     return {
       friends: [
-        {
-          id: "sadegh",
-          phoneNumber: "0915445578",
-          email: "test@gmail.com",
-          isFavorite: true,
-          name: "sadegh zavvar",
-        },
-        {
-          id: "hossein",
-          phoneNumber: "0915445578",
-          email: "test@gmail.com",
-          isFavorite: false,
-          name: "hsoeein esmaili",
-        },
-        {
-          id: "mori",
-          phoneNumber: "0915445578",
-          email: "mori@gmail.com",
-          isFavorite: false,
-          name: "mori penguin",
-        },
+        // {
+        //   id: "sadegh",
+        //   phoneNumber: "0915445578",
+        //   email: "test@gmail.com",
+        //   isFavorite: true,
+        //   name: "sadegh zavvar",
+        // },
+        // {
+        //   id: "hossein",
+        //   phoneNumber: "0915445578",
+        //   email: "test@gmail.com",
+        //   isFavorite: false,
+        //   name: "hsoeein esmaili",
+        // },
+        // {
+        //   id: "mori",
+        //   phoneNumber: "0915445578",
+        //   email: "mori@gmail.com",
+        //   isFavorite: false,
+        //   name: "mori penguin",
+        // },
       ],
     };
   },
   methods: {
+    addFriendInfo(name, phoneNumber, email) {
+      const newFriendContact = {
+        id: Math.random(),
+        name,
+        phoneNumber,
+        email,
+        isFavorite: true,
+      };
+      this.friends.push(newFriendContact);
+      console.log("friends", this.friends);
+    },
     toggleFavorite(friendId) {
       const identifiedFriend = this.friends.find(
         (friend) => friend.id === friendId
@@ -84,7 +98,8 @@ header {
   padding: 0;
   list-style: none;
 }
-#app li {
+#app li,
+#app form {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 1rem auto;
   border-radius: 10px;
@@ -113,5 +128,18 @@ header {
   background-color: #ec3169;
   border-color: #ec3169;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
+}
+#app input {
+  font: inherit;
+  padding: 0.15rem;
+}
+#app label {
+  font-weight: bold;
+  margin-right: 1rem;
+  width: 7rem;
+  display: inline-block;
+}
+#app form div {
+  margin: 1rem 0;
 }
 </style>
